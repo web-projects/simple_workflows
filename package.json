@@ -4,10 +4,11 @@
   "description": "A project to showcase workflows",
   "repository": {
     "type": "git",
-    "url": "?.git"
+    "url": "git@github.com:web-projects/simple_workflows.git"
   },
   "author": "Jon Bianco",
   "dependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-util": "^3.0.8"
   }
 }
