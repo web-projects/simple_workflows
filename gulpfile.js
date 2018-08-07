@@ -6,6 +6,12 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
+    minifyHTML = require('gulp-minify-html'),
+    jsonMinify = require('gulp-jsonminify'),
+    jsonMinify = require('gulp-jsonminify'),
+    imageMin = require('gulp-imagemin'),
+    imageMin = require('gulp-imagemin'),
+    pngCrush = require('imagemin-pngcrush'),
     browserify = require('gulp-browserify');
 
 gulp.task('log', function() {
@@ -44,7 +50,10 @@ jsSources = [
 
 sassSources = [ 'components/sass/style.scss' ];
 jsonSources = [outputDir + '/js/*.json'];
+jsonDevelopmentSources = [ 'builds/development/js/*.json' ];
 htmlSources = [outputDir + '/*.html'];
+htmlDevelopmentSources = 'builds/development/*.html';
+imagesSources = [ 'builds/development/images/**/*.*' ];
 
 gulp.task('coffee', function() {
   gulp.src(coffeeSources)
@@ -82,12 +91,27 @@ gulp.task('connect', function() {
 });
 
 gulp.task('json', function() {
-  gulp.src(jsonSources)
+  gulp.src(jsonDevelopmentSources)
+  .pipe(gulpif(env === 'production', jsonMinify()))
+  .pipe(gulpif(env === 'production', gulp.dest('builds/production/js')))
   .pipe(connect.reload())
 });
 
 gulp.task('html', function() {
-  gulp.src(htmlSources)
+  gulp.src(htmlDevelopmentSources)
+  .pipe(gulpif(env === 'production', minifyHTML()))
+  .pipe(gulpif(env === 'production', gulp.dest(outputDir)))
+  .pipe(connect.reload())
+});
+
+gulp.task('images', function() {
+  gulp.src(imagesSources)
+  .pipe(gulpif(env === 'production', imageMin({
+    progressive: true,
+    svgoPlugins: [ {removeViewBox: false } ],
+    use: [pngCrush()]
+  })))
+  .pipe(gulpif(env === 'production', gulp.dest(outputDir + 'images')))
   .pipe(connect.reload())
 });
 
@@ -96,9 +120,10 @@ gulp.task('watch', function() {
   gulp.watch(coffeeSources, ['coffee']);
   gulp.watch(jsSources, ['js']);
   gulp.watch('components/sass/*.scss', ['compass']);
-  gulp.watch(jsonSources, ['json']);
-  gulp.watch(htmlSources, ['html']);
+  gulp.watch(jsonDevelopmentSources, ['json']);
+  gulp.watch(htmlDevelopmentSources, ['html']);
+  gulp.watch(imagesSources, ['images']);
 });
 
 // ASSIGN DEFAULT BUILD
-gulp.task('default', ['html', 'json', 'coffee', 'js', 'compass', 'connect', 'watch'])
+gulp.task('default', ['html', 'json', 'coffee', 'js', 'compass', 'images', 'connect', 'watch'])
