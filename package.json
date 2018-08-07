@@ -9,8 +9,12 @@
   "author": "Jon Bianco",
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-browserify": "^0.5.1",
     "gulp-coffee": "^3.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-util": "^3.0.8"
+    "gulp-jquery": "^1.1.2",
+    "gulp-mustache": "^3.0.1",
+    "gulp-util": "^3.0.8",
+    "jquery": "^3.3.1"
   }
 }
