@@ -2,7 +2,7 @@ SerenataWeb | WORKFLOWS PROJECT
 ================================================================================
 
 # REPOSITORY
-  git init
+
   git remote add origin git@github.com:web-projects/simple_workflows.git
 
 # This is a WORKFLOWS Project:
