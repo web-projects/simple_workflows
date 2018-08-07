@@ -11,7 +11,7 @@ SerenataWeb | WORKFLOWS PROJECT
 
 # To run:
 
-    $
+    $ gulp # run 'default' task
 
 # HISTORY
 -----------------
