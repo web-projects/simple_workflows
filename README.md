@@ -8,7 +8,8 @@ SerenataWeb | WORKFLOWS PROJECT
 # This is a WORKFLOWS Project:
 
   * integrating workflows toolset
-
+  * docs: https://github.com/gulpjs/gulp/blob/v3.9.1/docs/API.md
+  
 # To run:
 
     $ gulp # run 'default' task

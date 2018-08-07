@@ -43,5 +43,12 @@ gulp.task('compass', function() {
     .pipe(gulp.dest('builds/development/css'))
 });
 
+// Watch for changes on a given target and recompile
+gulp.task('watch', function() {
+  gulp.watch(coffeeSources, ['coffee']);
+  gulp.watch(jsSources, ['js']);
+  gulp.watch('components/sass/*.scss', ['compass']);
+});
+
 // ASSIGN DEFAULT BUILD
 gulp.task('default', ['coffee', 'js', 'compass'])
