@@ -51,4 +51,4 @@ gulp.task('watch', function() {
 });
 
 // ASSIGN DEFAULT BUILD
-gulp.task('default', ['coffee', 'js', 'compass'])
+gulp.task('default', ['coffee', 'js', 'compass', 'watch'])
