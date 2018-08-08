@@ -6,10 +6,10 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     gulpif = require('gulp-if'),
     uglify = require('gulp-uglify'),
+    composer = require('gulp-uglify/composer'),
+    uglifyES = require('uglify-es'),
     minifyHTML = require('gulp-minify-html'),
     jsonMinify = require('gulp-jsonminify'),
-    jsonMinify = require('gulp-jsonminify'),
-    imageMin = require('gulp-imagemin'),
     imageMin = require('gulp-imagemin'),
     pngCrush = require('imagemin-pngcrush'),
     browserify = require('gulp-browserify');
@@ -55,6 +55,8 @@ htmlSources = [outputDir + '/*.html'];
 htmlDevelopmentSources = 'builds/development/*.html';
 imagesSources = [ 'builds/development/images/**/*.*' ];
 
+var minify = composer(uglifyES, console);
+
 gulp.task('coffee', function() {
   gulp.src(coffeeSources)
     .pipe(coffee({ bare: true })
@@ -63,10 +65,11 @@ gulp.task('coffee', function() {
 });
 
 gulp.task('js', function() {
+  var options = {};
   gulp.src(jsSources)
   .pipe(concat('script.js'))
   .pipe(browserify())
-  .pipe(gulpif(env === 'production', uglify()))
+  .pipe(gulpif(env === 'production', minify(options)))
   .pipe(gulp.dest(outputDir + '/js'))
   .pipe(connect.reload())
 });
@@ -111,7 +114,7 @@ gulp.task('images', function() {
     svgoPlugins: [ {removeViewBox: false } ],
     use: [pngCrush()]
   })))
-  .pipe(gulpif(env === 'production', gulp.dest(outputDir + 'images')))
+  .pipe(gulpif(env === 'production', gulp.dest(outputDir + '/images')))
   .pipe(connect.reload())
 });
 

@@ -23,6 +23,7 @@
     "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8",
     "imagemin-pngcrush": "^5.1.0",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "uglify-es": "^3.3.9"
   }
 }
